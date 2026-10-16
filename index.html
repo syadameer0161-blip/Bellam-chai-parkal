@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#6b2f1a">
+<title>Bellam Chai Parkal | Order Online</title>
+<style>
+:root{--brown:#6b2f1a;--cream:#fff8ed;--orange:#e77b35;--ink:#2d211b;--muted:#796b62;--line:#eadbcb}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(135deg,#542512,#8a4524);color:#fff;padding:28px 18px 24px;text-align:center}
+.logo{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:.85}.brand{font-size:clamp(30px,8vw,46px);font-weight:850;line-height:1.05;margin:8px 0}.tagline{font-size:14px;opacity:.9}.pill{display:inline-block;background:#f5d4a8;color:#512b18;padding:7px 13px;border-radius:99px;font-size:12px;font-weight:700;margin-top:14px}
+main{max-width:950px;margin:auto;padding:18px 14px 110px}.notice{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;font-size:13px;color:var(--muted);margin-bottom:17px}
+.tabs{display:flex;gap:8px;overflow:auto;padding:2px 0 12px;position:sticky;top:0;background:var(--cream);z-index:3}
+.tabs button{border:1px solid var(--line);border-radius:99px;padding:10px 14px;background:#fff;color:var(--brown);font-weight:750;white-space:nowrap}
+.tabs button.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+h2{font-size:21px;margin:15px 0 12px}.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.item{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;flex-direction:column;min-height:142px}
+.emoji{font-size:27px}.item h3{font-size:15px;margin:7px 0 4px}.item .desc{font-size:12px;color:var(--muted);flex:1}.item-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:11px}.price{font-weight:850;color:var(--brown)}
+.add,.primary{border:0;background:var(--orange);color:#fff;border-radius:10px;font-weight:800;padding:9px 12px;cursor:pointer}.add{font-size:13px}.cartbox,.checkout{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:22px}.cart-row{display:flex;gap:9px;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f1e7dc}.cart-row:last-child{border-bottom:0}.cart-name{font-weight:700;font-size:14px}.cart-price{font-size:12px;color:var(--muted);margin-top:3px}.qty{display:flex;align-items:center;gap:9px}.qty button{width:30px;height:30px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--brown);font-weight:800;font-size:18px}.total{display:flex;justify-content:space-between;font-size:19px;font-weight:850;padding-top:14px}.empty{color:var(--muted);font-size:14px;padding:8px 0}
+label{display:block;font-size:13px;font-weight:750;margin:12px 0 6px}input,textarea,select{width:100%;padding:12px;border:1px solid #ddcaba;border-radius:10px;background:#fff;font:inherit;font-size:15px;color:var(--ink)}textarea{min-height:78px;resize:vertical}.primary{width:100%;padding:14px;font-size:16px;margin-top:15px;background:#168348}.small{font-size:12px;color:var(--muted);line-height:1.5}.footer{text-align:center;font-size:12px;color:var(--muted);padding:25px 8px}.sticky-cart{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;z-index:5;display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 -4px 20px #43200d10}.sticky-cart .summary{font-size:13px;color:var(--muted)}.sticky-cart strong{display:block;font-size:17px;color:var(--brown)}.sticky-cart button{border:0;border-radius:11px;background:var(--brown);color:#fff;font-weight:800;padding:13px 17px}
+@media(min-width:650px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:24px}.item{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Freshly brewed • Made with love</div>
+  <div class="brand">Bellam Chai</div>
+  <div class="tagline">Parkal · Chai, Shakes, Mojitos & Snacks</div>
+  <div class="pill">☕ Your local chai stop</div>
+</header>
+<main>
+  <div class="notice">🛵 <strong>Order online for delivery</strong><br>Choose your favourites, add them to your cart, then send your order to us on WhatsApp. Delivery charges are confirmed by the shop.</div>
+  <nav class="tabs" id="tabs" aria-label="Menu categories"></nav>
+  <h2 id="sectionTitle">☕ Chai Menu</h2>
+  <section class="menu" id="menu" aria-live="polite"></section>
+
+  <section class="cartbox" id="cart">
+    <h2 style="margin-top:0">🛒 Your Cart</h2>
+    <div id="cartItems"><div class="empty">Your cart is empty. Add something tasty!</div></div>
+    <div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
+    <p class="small">Delivery charge, if any, will be confirmed by Bellam Chai Parkal before dispatch.</p>
+  </section>
+
+  <section class="checkout" id="checkout">
+    <h2 style="margin-top:0">📍 Delivery Details</h2>
+    <label for="customer">Your name *</label>
+    <input id="customer" autocomplete="name" placeholder="Enter your name" required>
+    <label for="phone">Mobile number *</label>
+    <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your contact number" required>
+    <label for="address">Delivery address in/near Parkal *</label>
+    <textarea id="address" autocomplete="street-address" placeholder="House number, street, area, landmark" required></textarea>
+    <label for="payment">Payment preference</label>
+    <select id="payment"><option>Cash on Delivery</option><option>UPI (confirm with shop)</option></select>
+    <label for="notes">Extra instructions (optional)</label>
+    <textarea id="notes" placeholder="Less sugar, call on arrival, etc."></textarea>
+    <button class="primary" onclick="sendOrder()">Order on WhatsApp</button>
+    <p class="small">Your order details will open in WhatsApp. Please tap Send there to place the order. This website does not take online payments.</p>
+  </section>
+  <div class="footer">Bellam Chai Parkal · Thank you for supporting our local shop ❤️</div>
+</main>
+<div class="sticky-cart">
+  <div><span class="summary" id="cartCount">0 items in cart</span><strong id="stickyTotal">₹0</strong></div>
+  <button onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">View Cart ↓</button>
+</div>
+<script>
+const WHATSAPP_NUMBER = "919000733905"; // India country code + shop number
+const categories = [
+ {name:"Chai",emoji:"☕",items:[
+  ["Regular Chai",10,"Classic everyday chai"],["Ginger Tea",15,"Warm ginger flavour"],["Elaichi Tea",15,"Cardamom aroma"],["Masala Chai",15,"Spiced and comforting"],["Bellam Chai",20,"Our signature jaggery chai"],["Black Tea",15,"Light and simple"],["Green Tea",20,"Fresh green tea"],["Lemon Tea",20,"Bright and refreshing"],["Tulsi Tea",20,"Herbal tulsi infusion"],["Badam Tea",25,"Rich almond flavour"],["Irani Chai",20,"Creamy Irani-style tea"],["Kashmiri Kahwa",30,"Aromatic spiced tea"]
+ ]},
+ {name:"Milkshakes",emoji:"🥤",items:[
+  ["Vanilla Milkshake",50,"Smooth vanilla"],["Chocolate Milkshake",60,"Chocolate delight"],["Strawberry Milkshake",60,"Sweet strawberry"],["Oreo Milkshake",70,"Cookies and cream"],["KitKat Milkshake",80,"Chocolate wafer shake"],["Mango Milkshake",60,"Mango flavour"],["Banana Milkshake",50,"Banana blend"],["Dry Fruit Milkshake",90,"Rich dry fruit shake"]
+ ]},
+ {name:"Mojitos",emoji:"🍹",items:[
+  ["Classic Mint Mojito",40,"Minty and refreshing"],["Lemon Mojito",40,"Citrus cooler"],["Blue Lagoon Mojito",50,"Blue citrus cooler"],["Green Apple Mojito",50,"Crisp apple flavour"],["Watermelon Mojito",50,"Juicy watermelon cooler"],["Strawberry Mojito",50,"Berry and mint"]
+ ]},
+ {name:"Snacks",emoji:"🍟",items:[
+  ["Samosa",15,"Crispy snack"],["Veg Puff",20,"Flaky vegetable puff"],["French Fries",50,"Golden crispy fries"],["Veg Sandwich",40,"Fresh vegetable sandwich"],["Cheese Sandwich",60,"Cheesy and tasty"],["Maggi",30,"Classic noodles"],["Masala Maggi",40,"Spicy noodles"],["Biscuits",10,"Tea-time biscuits"],["Ice Cream",30,"Ask for available flavours"]
+ ]}
+];
+let activeCategory = "Chai";
+let cart = {};
+const rupees = n => "₹" + n;
+function allProducts(){ return categories.flatMap(c=>c.items.map(i=>({name:i[0],price:i[1],desc:i[2],category:c.name,emoji:c.emoji}))); }
+function renderTabs(){
+ const el=document.getElementById("tabs"); el.innerHTML="";
+ categories.forEach(c=>{const b=document.createElement("button");b.textContent=c.emoji+" "+c.name;b.className=c.name===activeCategory?"active":"";b.onclick=()=>{activeCategory=c.name;renderTabs();renderMenu();};el.appendChild(b);});
+}
+function renderMenu(){
+ const cat=categories.find(c=>c.name===activeCategory);
+ document.getElementById("sectionTitle").textContent=cat.emoji+" "+cat.name+" Menu";
+ const el=document.getElementById("menu");el.innerHTML="";
+ cat.items.forEach(i=>{
+  const qty=cart[i[0]]||0;const card=document.createElement("article");card.className="item";
+  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent=cat.emoji;
+  const h=document.createElement("h3");h.textContent=i[0];
+  const d=document.createElement("div");d.className="desc";d.textContent=i[2];
+  const bottom=document.createElement("div");bottom.className="item-bottom";
+  const p=document.createElement("span");p.className="price";p.textContent=rupees(i[1]);
+  const b=document.createElement("button");b.className="add";b.textContent=qty?("Added · "+qty):"＋ Add";b.onclick=()=>{cart[i[0]]=(cart[i[0]]||0)+1;renderMenu();renderCart();};
+  bottom.append(p,b);card.append(emoji,h,d,bottom);el.appendChild(card);
+ });
+}
+function cartProducts(){return allProducts().filter(p=>(cart[p.name]||0)>0);}
+function renderCart(){
+ const el=document.getElementById("cartItems"),items=cartProducts();el.innerHTML="";
+ if(!items.length){el.innerHTML='<div class="empty">Your cart is empty. Add something tasty!</div>';}
+ items.forEach(p=>{
+  const row=document.createElement("div");row.className="cart-row";
+  const info=document.createElement("div");info.style.flex="1";
+  const name=document.createElement("div");name.className="cart-name";name.textContent=p.emoji+" "+p.name;
+  const price=document.createElement("div");price.className="cart-price";price.textContent=rupees(p.price)+" each · "+rupees(p.price*cart[p.name]);
+  info.append(name,price);
+  const qty=document.createElement("div");qty.className="qty";
+  const minus=document.createElement("button");minus.textContent="−";minus.setAttribute("aria-label","Remove one "+p.name);minus.onclick=()=>{cart[p.name]--;if(cart[p.name]<=0)delete cart[p.name];renderCart();renderMenu();};
+  const count=document.createElement("strong");count.textContent=cart[p.name];
+  const plus=document.createElement("button");plus.textContent="+";plus.setAttribute("aria-label","Add one "+p.name);plus.onclick=()=>{cart[p.name]++;renderCart();renderMenu();};
+  qty.append(minus,count,plus);row.append(info,qty);el.appendChild(row);
+ });
+ const total=items.reduce((sum,p)=>sum+p.price*cart[p.name],0);
+ const count=items.reduce((sum,p)=>sum+cart[p.name],0);
+ document.getElementById("total").textContent=rupees(total);
+ document.getElementById("stickyTotal").textContent=rupees(total);
+ document.getElementById("cartCount").textContent=count+" item"+(count===1?"":"s")+" in cart";
+}
+function sendOrder(){
+ const items=cartProducts();
+ if(!items.length){alert("Please add at least one item to your cart.");return;}
+ const name=document.getElementById("customer").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const address=document.getElementById("address").value.trim();
+ const payment=document.getElementById("payment").value;
+ const notes=document.getElementById("notes").value.trim();
+ if(!name||!phone||!address){alert("Please fill in your name, mobile number and delivery address.");return;}
+ const total=items.reduce((sum,p)=>sum+p.price*cart[p.name],0);
+ let msg="*New Order — Bellam Chai Parkal*%0A";
+ msg="*New Order — Bellam Chai Parkal*";
+ msg+="\n----------------------\n";
+ items.forEach(p=>{msg+="\n"+p.name+" × "+cart[p.name]+" = "+rupees(p.price*cart[p.name]);});
+ msg+="\n\n*Subtotal: "+rupees(total)+"*";
+ msg+="\nDelivery: Please confirm";
+ msg+="\n\n*Customer:* "+name;
+ msg+="\n*Customer mobile:* "+phone;
+ msg+="\n*Address:* "+address;
+ msg+="\n*Payment preference:* "+payment;
+ if(notes)msg+="\n*Instructions:* "+notes;
+ msg+="\n\nPlease confirm availability, delivery charge and estimated delivery time.";
+ window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
+}
+renderTabs();renderMenu();renderCart();
+</script>
+</body>
+</html>
